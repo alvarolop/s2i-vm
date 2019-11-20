@@ -1,0 +1,9 @@
+rhel:
+  ip:   192.168.122.200
+  host: rhel8.vm
+  user: user
+
+rh_subscription:
+  username: "{{ vault_rh_subscription_username | mandatory }}"
+  password: "{{ vault_rh_subscription_password | mandatory }}"
+  poolid: "{{ vault_rh_subscription_poolid | mandatory }}"

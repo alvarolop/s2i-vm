@@ -1,0 +1,15 @@
+rhel8.vm:
+  template: /home/alvaro/vms/rhel-8.1-x86_64-kvm.qcow2
+  numcpus: 2
+  memory: 6144
+  disks:
+    - size: 50
+  nets:
+    - name: default
+      ip: 192.168.122.200
+      mask: 255.255.255.0
+      gateway: 192.168.122.1
+  cmds:
+    - echo root | passwd --stdin root
+    - useradd -G wheel user
+    - echo user | passwd --stdin user

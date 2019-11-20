@@ -1,0 +1,25 @@
+- name: Add machines to hosts file and configure ssh connection
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Add vms to hosts file
+      lineinfile:
+        dest: "/etc/hosts"
+        state: present
+        line: "{{ rhel.ip }} {{ rhel.host }}"
+        backup: yes
+    - name: Configure ssh to vms
+      blockinfile:
+        path: "{{ lookup('env','HOME') + '/.ssh/config' }}"
+        state: present
+        marker: "# {mark} ANSIBLE MANAGED BLOCK {{ rhel.host }}"
+        block: |
+          Host {{ rhel.host }}
+             User {{ rhel.user }}
+    - name: Ansible inventory file with content
+      copy:
+        dest: inventory
+        content: |
+          [vms]
+          rhel8.vm
